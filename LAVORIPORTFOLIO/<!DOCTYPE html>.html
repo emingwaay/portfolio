@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emiliano Garibaldi</title>
+  <link rel="icon" href="ASSETS/EMILIANO2.png";  type="image/x-icon">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      -ms-overflow-style: none;
+    }
+
+    /* Per Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Per Firefox */
+html {
+  scrollbar-width: none;  /* Nasconde la barra di scroll */
+}
+
+/* Per Internet Explorer */
+body {
+  -ms-overflow-style: none;
+}
+
+
+
+    .portfolio-table {
+      width: 100%;
+      border-collapse: collapse;
+      
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid #333; /* Linee orizzontali */
+      cursor: pointer;
+    }
+
+    .row:last-child {
+      border-bottom: none; /* Rimuove la linea orizzontale dall'ultima riga */
+    }
+
+    .header {
+      font-weight: bold;
+    }
+
+    .cell {
+      flex: 1;
+      padding: 8px;  /* Ridotto da 15px a 8px */
+      text-align: left;
+      box-sizing: border-box;
+    }
+
+    .cell1 {
+      flex: 1;
+      padding: 8px;  /* Ridotto da 15px a 8px */
+      text-align: right;
+      box-sizing: border-box;
+    }
+
+    .cell2 {
+      flex: 1;
+      padding: 8px;  /* Ridotto da 15px a 8px */
+      margin-left: 15%;
+      text-align: left;
+      box-sizing: border-box;
+    }
+
+
+    .cell0 {
+      flex: 1;
+      padding: 8px;  /* Ridotto da 15px a 8px */
+      text-align: left;
+      box-sizing: border-box;
+      color: #aaa;
+
+    }
+
+    .cell10 {
+      flex: 1;
+      padding: 8px;  /* Ridotto da 15px a 8px */
+      text-align: right;
+      box-sizing: border-box;
+      color: #aaa;
+
+    }
+
+    .cell20 {
+      flex: 1;
+      padding: 8px;  /* Ridotto da 15px a 8px */
+      margin-left: 15%;
+      text-align: left;
+      box-sizing: border-box;
+      color: #aaa;
+
+    }
+
+
+    .row:not(.header) .cell {
+      border: none; /* Elimina tutte le linee verticali */
+      
+    }
+
+    .description-row {
+      display: none;
+      background-color: none;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .description {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .image-gallery {
+      display: flex;
+      overflow-x: scroll; /* Consente lo scroll orizzontale */
+      align-items: flex-start;
+      -ms-overflow-style: none;  /* Nasconde la barra di scroll in Internet Explorer */
+      scrollbar-width: none; /* Nasconde la barra di scroll in Firefox */
+      scroll-behavior: none; /* Nasconde la barra di scroll in Firefox */
+
+    }
+
+    .image-gallery img {
+        height: auto;
+  object-fit: contain;
+  
+}
+
+.image-gallery img.horizontal {
+  width: 620px; /* 20% più largo per le immagini orizzontali */
+}
+
+.image-gallery img.vertical {
+  width: 300px; /* Larghezza per le immagini verticali */
+}
+
+    .image-gallery::-webkit-scrollbar {
+      display: none; /* Nasconde la barra di scroll in Chrome, Safari e Edge */
+    }
+
+        /* Nuovo stile per la colonna con testo in movimento */
+        .moving-text-column {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      
+      background-image: url('ASSETS/EMILIANO2.png'); /* Percorso immagine */
+      background-size: 100% 100%; /* L'immagine copre tutta la colonna */
+  background-position: center; /* Posiziona l'immagine al centro della colonna */
+  background-repeat: no-repeat; /* Evita che l'immagine si ripeta */
+
+    }
+
+    .moving-text {
+      position: absolute;
+      font-size: 50px;
+      font-weight: bold;
+      color: #fff;
+      mix-blend-mode: difference;
+    }
+
+
+
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .overlay-content {
+      background: white;
+      padding-top: 10px;
+      padding-bottom: 20px;
+      padding-left: 15%;
+      padding-right: 15%;
+      color: black;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      position: relative;
+    }
+
+    .close-button {
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      margin-top: 20px;
+    }
+
+
+    /* Stile per la colonna con testo di caricamento */
+.loading-text-column {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: black; /* Sfondo trasparente per evidenziare il testo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Stile per il testo di caricamento */
+.loading-text {
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+    mix-blend-mode: difference;
+}
+
+@media screen and (min-width: 730px) and (min-height: 770px) {
+  /* Inserisci qui il tuo CSS che deve essere visibile quando la finestra è uguale o maggiore di 730x770 */
+  .portfolio-table,
+  .moving-text-column,
+  .overlay,
+  .loading-text-column {
+    display: block;
+  }
+}
+
+/* Nascondere per dimensioni inferiori a 730x770 */
+@media screen and (max-width: 729px), screen and (max-height: 769px) {
+  .portfolio-table,
+  .moving-text-column,
+  .overlay,
+  .loading-text-column {
+    display: none;
+  }
+}
+
+/* Default: nascondi il messaggio */
+.only-desktop {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+    color: rgb(255, 255, 255); /* Puoi cambiare il colore */
+    font-weight: bold;
+    animation: bounce 1.5s ease-in-out infinite; /* Animazione di rimbalzo */
+}
+
+/* Quando la finestra è più piccola di 730x770px, mostra il messaggio */
+@media (max-width: 730px) and (max-height: 770px) {
+    .only-desktop {
+        display: block;
+    }
+}
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="portfolio-table">
+    <div class="row header">
+      <div class="cell0">Project</div>
+      <div class="cell20">Category</div>
+      <div class="cell20">Client</div>
+      <div class="cell10">Year</div>
+    </div>
+    
+    <!-- First Project -->
+    <div class="row" onclick="toggleDescription('desc1')">
+      <div class="cell">Specta</div>
+      <div class="cell2">Speculative Design</div>
+      <div class="cell2">Triennale di Milano</div>
+      <div class="cell1">2023</div>
+    </div>
+    <div id="desc1" class="description-row">
+      <div class="description">
+        Litia, an high tech corporation, developed Specta: your personal eco-anxiety silencer. Specta is the result of a speculative design project about climate change. It’s a device that protects against eco-anxiety by silencing the screens that show harmful visual materials about climate change and which leads to seeing them from the rock’s perspective. Infact through Specta, it is possible to watch the same events related to climate change from the perspective of the rocks, seen as calming stratifications, and enter into a state of contemplation.
+        <br>
+        Team: Francesco Bonetti, Enrico Isidori, Federico Gajo, Cecilia Pizzagalli, Camilla Tosi  
+        <br><a href="https://drive.google.com/file/d/1A5hLt-v4uYkF8duTtxmUk8dQu70eMLM4/view?usp=drive_link" target="_blank">Watch the Video</a> 
+          </div>
+      <!-- Image Gallery for First Project -->
+      <div class="image-gallery">
+        <img src="/SPECTA/FOTO1.jpg" alt="Image 1" class="horizontal">
+        <img src="/SPECTA/FOTO2.jpg" alt="Image 2" class="horizontal">
+        <img src="/SPECTA/FOTO3.jpg" alt="Image 3" class="horizontal">
+        <img src="/SPECTA/FOTO4.jpg" alt="Image 4" class="horizontal">
+        <img src="/SPECTA/FOTO5.jpg" alt="Image 5" class="horizontal">
+        <img src="/SPECTA/FOTO6.jpg" alt="Image 6" class="horizontal">
+        <img src="/SPECTA/FOTO7.jpg" alt="Image 7" class="horizontal">
+        <img src="/SPECTA/FOTO8.jpg" alt="Image 8" class="horizontal">
+
+      </div>
+    </div>
+
+    <!-- Second Project -->
+    <div class="row" onclick="toggleDescription('desc2')">
+      <div class="cell">Gucci / Kaleos Concept</div>
+      <div class="cell2">Art Direction / Photography</div>
+      <div class="cell2">Personal Work</div>
+      <div class="cell1">2023</div>
+    </div>
+    <div id="desc2" class="description-row">
+      <div class="description">
+        This project aims to create on-brand photos for Gucci and Kaleos eyewear to promote their products. The goal is to capture the essence of both brands, while maintaining their identity and conveying style, luxury, and uniqueness through compelling visuals.      </div>
+      <!-- Image Gallery for Second Project -->
+      <div class="image-gallery">
+        <img src="/GUCCIKALEOS/FOTO1.jpg" alt="Image 1" class="vertical">
+        <img src="/GUCCIKALEOS/FOTO2.jpg" alt="Image 2" class="vertical">
+        <img src="/GUCCIKALEOS/FOTO3.jpg" alt="Image 3" class="vertical">
+        <img src="/GUCCIKALEOS/FOTO4.jpg" alt="Image 4" class="vertical">
+        <img src="/GUCCIKALEOS/FOTO5.jpg" alt="Image 5" class="vertical">
+        <img src="/GUCCIKALEOS/FOTO6.jpg" alt="Image 6" class="vertical">
+
+      </div>
+    </div>
+    
+     <!-- third Project -->
+     <div class="row" onclick="toggleDescription('desc3')">
+        <div class="cell">Certosa District</div>
+        <div class="cell2">Art Direction / Branding</div>
+        <div class="cell2">Certosa District</div>
+        <div class="cell1">2023</div>
+      </div>
+      <div id="desc3" class="description-row">
+        <div class="description">
+            The rebranding project for the Certosa District represents a significant step in the urban revitalization of the district in Milan. Through in-depth study and careful analysis, we have been able to create not only a distinctive logo but an entire identity based on forms that come to life from words and ideas.
+            <br> Team: Ginevra Bernasconi, Federico Gajo, Nicola Patitucci, Francesco Scarfone        </div>
+        <!-- Image Gallery for 3 Project -->
+        <div class="image-gallery">
+            <img src="/CERTOSA/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/CERTOSA/FOTO2.jpg" alt="Image 2" class="horizontal">
+            <img src="/CERTOSA/FOTO3.jpg" alt="Image 3" class="horizontal">
+            <img src="/CERTOSA/FOTO4.jpg" alt="Image 4" class="horizontal">
+            <img src="/CERTOSA/FOTO5.jpg" alt="Image 5" class="horizontal">
+            <img src="/CERTOSA/FOTO6.jpg" alt="Image 6" class="vertical">
+            <img src="/CERTOSA/FOTO7.jpg" alt="Image 7" class="horizontal">
+            <img src="/CERTOSA/FOTO8.jpg" alt="Image 8" class="horizontal">
+        </div>
+      </div>
+  
+      <!-- 4 Project -->
+      <div class="row" onclick="toggleDescription('desc4')">
+        <div class="cell">LRC</div>
+        <div class="cell2">Art Direction / Branding</div>
+        <div class="cell2">Le Reve Charmant</div>
+        <div class="cell1">2024</div>
+      </div>
+      <div id="desc4" class="description-row">
+        <div class="description">
+            The rebranding project for Le Rêve Charmant redefines its identity as a gateway to dreams and wonder in the heart of Aosta. Centered around the concept of offering guests a unique, magical experience, the new branding revitalizes its connection to storytelling and enchantment, with a refined logo that preserves the essence of the original while embracing a fresh vision of elegance and charm.
+            <br>Team: Samuele Buffa        </div>
+        <!-- Image Gallery for 4 Project -->
+        <div class="image-gallery">
+            <img src="/LRC/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/LRC/FOTO2.jpg" alt="Image 2" class="horizontal">
+            <img src="/LRC/FOTO3.jpg" alt="Image 3" class="horizontal">
+            <img src="/LRC/FOTO4.jpg" alt="Image 4" class="horizontal">
+            <img src="/LRC/FOTO5.jpg" alt="Image 5" class="horizontal">
+            <img src="/LRC/FOTO6.jpg" alt="Image 6" class="vertical">
+            <img src="/LRC/FOTO7.jpg" alt="Image 7" class="horizontal">
+        </div>
+      </div>
+
+       <!-- 5 Project -->
+    <div class="row" onclick="toggleDescription('desc5')">
+        <div class="cell">Pensiero Selvaggio </div>
+        <div class="cell2">Art Direction / Branding</div>
+        <div class="cell2">Fare Ricerca</div>
+        <div class="cell1">2024</div>
+      </div>
+      <div id="desc5" class="description-row">
+        <div class="description">
+            The rebranding project for Pensiero Selvaggio takes inspiration from the intricate symbolism and aesthetic heritage of the Dogon people, channeling their cultural depth into a bold and evocative visual identity. Rooted in the synergy between anthropology and communication design, the new identity reflects Pensiero Selvaggio’s commitment to authentic and impactful storytelling. Through this transformation, the agency reaffirms its mission to connect deeply with audiences by blending research-driven insights with meaningful creative strategies.        </div>
+        <!-- Image Gallery for 5 Project -->
+        <div class="image-gallery">
+            <img src="/PENSIEROSELVAGGIO/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/PENSIEROSELVAGGIO/FOTO2.jpg" alt="Image 2" class="horizontal">
+            <img src="/PENSIEROSELVAGGIO/FOTO3.jpg" alt="Image 3" class="horizontal">
+            <img src="/PENSIEROSELVAGGIO/FOTO4.jpg" alt="Image 4" class="horizontal">
+            <img src="/PENSIEROSELVAGGIO/FOTO5.jpg" alt="Image 5" class="horizontal">
+        </div>
+      </div>
+  
+      <!-- 6 Project -->
+      <div class="row" onclick="toggleDescription('desc6')">
+        <div class="cell">Bejac</div>
+        <div class="cell2">Art Direction / Branding</div>
+        <div class="cell2">Ottico Roggero</div>
+        <div class="cell1">2022</div>
+      </div>
+      <div id="desc6" class="description-row">
+        <div class="description">
+            Bejac is a brand of glasses by Ottico Roggero. It is a new brand Made in Italy, including both sunglasses and eyeglasses totally handmade, with a fresh and modern spirit. The customer needed a logo and a photographic campaign, aimed to highlight the different purposes and the young and pop soul of these frames.        </div>
+        <!-- Image Gallery for 6 Project -->
+        <div class="image-gallery">
+            <img src="/bejac/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/bejac/FOTO3.jpg" alt="Image 2" class="horizontal">
+            <img src="/bejac/FOTO2.jpg" alt="Image 3" class="horizontal">
+            <img src="/bejac/FOTO4.jpg" alt="Image 4" class="vertical">
+            <img src="/bejac/FOTO5.jpg" alt="Image 5" class="vertical">
+            <img src="/bejac/FOTO6.jpg" alt="Image 6" class="vertical">
+            <img src="/bejac/FOTO7.jpg" alt="Image 7" class="vertical">
+        </div>
+      </div>
+
+       <!-- 7 Project -->
+    <div class="row" onclick="toggleDescription('desc7')">
+        <div class="cell">Beba</div>
+        <div class="cell2">Art Direction / Branding</div>
+        <div class="cell2">Beba</div>
+        <div class="cell1">2023</div>
+      </div>
+      <div id="desc7" class="description-row">
+        <div class="description">
+            This branding project reimagines the identity of a handmade crochet clothing brand, aiming to break away from traditional perceptions of this craft. The goal is to infuse it with a contemporary, fresh, and modern aesthetic while preserving the inherent sense of lightness and delicacy that defines crochet. The brand seeks to bridge the timeless charm of handmade artistry with the dynamic energy of current fashion trends, creating pieces that feel both rooted in tradition and attuned to the present.        </div>
+        <!-- Image Gallery for 7 Project -->
+        <div class="image-gallery">
+            <img src="/BEBA/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/BEBA/FOTO3.jpg" alt="Image 2" class="vertical">
+            <img src="/BEBA/FOTO2.jpg" alt="Image 3" class="vertical">
+            <img src="/BEBA/FOTO4.jpg" alt="Image 4" class="horizontal">
+            <img src="/BEBA/FOTO5.jpg" alt="Image 5" class="vertical">
+            <img src="/BEBA/FOTO6.jpg" alt="Image 6" class="vertical">
+           
+        </div>
+      </div>
+  
+      <!-- 8 Project -->
+      <div class="row" onclick="toggleDescription('desc8')">
+        <div class="cell">Welcome in to the CLUB</div>
+        <div class="cell2">Art Direction</div>
+        <div class="cell2">MOVI CLUB</div>
+        <div class="cell1">2024</div>
+      </div>
+      <div id="desc8" class="description-row">
+        <div class="description">
+            The project is a photographic campaign capturing the essence of Movi Club through its merchandise and gadgets.
+        <br>Team: Enrico Mondelli       </div>
+        <!-- Image Gallery for 8 Project -->
+        <div class="image-gallery">
+            <img src="/MOVI/FOTO1.jpg" alt="Image 1" class="vertical">
+            <img src="/MOVI/FOTO2.jpg" alt="Image 2" class="vertical">
+            <img src="/MOVI/FOTO3.jpg" alt="Image 3" class="vertical">
+            <img src="/MOVI/FOTO4.jpg" alt="Image 4" class="vertical">
+            <img src="/MOVI/FOTO5.jpg" alt="Image 5" class="vertical">
+            <img src="/MOVI/FOTO6.jpg" alt="Image 6" class="vertical">
+            <img src="/MOVI/FOTO7.jpg" alt="Image 7" class="vertical">
+            <img src="/MOVI/FOTO8.jpg" alt="Image 8" class="vertical">
+        </div>
+      </div>
+
+       <!-- 9 Project -->
+    <div class="row" onclick="toggleDescription('desc9')">
+        <div class="cell">Spazio Luce</div>
+        <div class="cell2">Art Direction / Experience Design</div>
+        <div class="cell2">RAI Accessibilità</div>
+        <div class="cell1">2024</div>
+      </div>
+      <div id="desc9" class="description-row">
+        <div class="description">
+            The audiovisual project for “Varese Scrim” enhances the original work’s multisensory experience through innovative design. Using 3D modeling, soundscapes, and tailored lighting effects, it recreates Robert Irwin’s immersive interplay of light and fabric. The campaign prioritizes accessibility with features like audiodescriptions, tactile elements, and dynamic subtitles, ensuring an inclusive engagement with the artwork’s sensory and conceptual dimensions.
+            <br>Team: Gaia Cantarutti, Silvia Caramola, Nicola Patitucci, Emanuel Simionato  
+            <br><a href="https://drive.google.com/file/d/1_ykgp8o-Bqzn_JOJDAFWdsGBlsjezFdP/view?usp=sharing" target="_blank">See the experience</a>
+            <br><a href="https://drive.google.com/file/d/10MQ4QYQYzK3vewialtJ9R38MCdyju70E/view?usp=drive_link" target="_blank">Watch the Video</a> 
+               </div>
+        <!-- Image Gallery for 9 Project -->
+        <div class="image-gallery">
+            <img src="/SPAZIOLUCE/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/SPAZIOLUCE/FOTO2.jpg" alt="Image 2" class="horizontal">
+            <img src="/SPAZIOLUCE/FOTO3.jpg" alt="Image 3" class="vertical">
+            <img src="/SPAZIOLUCE/FOTO4.jpg" alt="Image 4" class="vertical">
+            <img src="/SPAZIOLUCE/FOTO5.jpg" alt="Image 5" class="horizontal">
+            <img src="/SPAZIOLUCE/FOTO6.jpg" alt="Image 6" class="vertical">
+            <img src="/SPAZIOLUCE/FOTO7.jpg" alt="Image 7" class="vertical">
+
+        </div>
+      </div>
+  
+      <!-- 10 Project -->
+      <div class="row" onclick="toggleDescription('desc10')">
+        <div class="cell">New IG stories look</div>
+        <div class="cell2">Art Direction / Graphic Design</div>
+        <div class="cell2">YOOX</div>
+        <div class="cell1">2023</div>
+      </div>
+      <div id="desc10" class="description-row">
+        <div class="description">
+            The restyling of Yoox’s Instagram stories updates the brand’s playful tone with a sle- ek, modern aesthetic. Dynamic layouts, bold colors, and interactive elements enhan- ce engagement while keeping the content fresh and on-trend.
+            <br>Team: Lorenzo Ebale, Francesco Seresi        </div>
+        <!-- Image Gallery for 10 Project -->
+        <div class="image-gallery">
+            <img src="/YOOX/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/YOOX/FOTO2.jpg" alt="Image 2" class="horizontal">
+            <img src="/YOOX/FOTO3.jpg" alt="Image 3" class="horizontal">
+        </div>
+      </div>
+
+       <!-- 11 Project -->
+    <div class="row" onclick="toggleDescription('desc11')">
+        <div class="cell">UNPLACED</div>
+        <div class="cell2">Web Design</div>
+        <div class="cell2">Personal Work</div>
+        <div class="cell1">2024</div>
+      </div>
+      <div id="desc11" class="description-row">
+        <div class="description">
+            Unplaced is a website that turns discomfort into reality by giving voice and form to personal experiences. People share how they imagine their room of discomfort expressing their sensations and fears. On the site, you can listen to their stories
+            and view these rooms to step into their reality and try to understand their discomfort.
+            <br>Team: Federico Gajo, Nicola Patitucci, Francesco Scarfone, Michele Venini 
+        <br><a href="https://aldatabase.github.io/unplaced/Cover.html" target="_blank">VISIT UNPLACED</a>        </div>
+        <!-- Image Gallery for 11 Project -->
+        <div class="image-gallery">
+            <img src="/UNPLACED/FOTO1.jpg" alt="Image 1" class="horizontal">
+        </div>
+      </div>
+  
+      <!-- 12 Project -->
+      <div class="row" onclick="toggleDescription('desc12')">
+        <div class="cell">Some Shoots</div>
+        <div class="cell2">Photography</div>
+        <div class="cell2">Personal Work</div>
+        <div class="cell1">2025</div>
+      </div>
+      <div id="desc12" class="description-row">
+        <div class="description">
+            A constantly expanding collection of photographs.       </div>
+        <!-- Image Gallery for 12 Project -->
+        <div class="image-gallery">
+            <img src="/SOMESHOOTS/FOTO1.jpg" alt="Image 1" class="horizontal">
+            <img src="/SOMESHOOTS/FOTO2.jpg" alt="Image 2" class="horizontal">
+            <img src="/SOMESHOOTS/FOTO3.jpg" alt="Image 3" class="vertical">
+            <img src="/SOMESHOOTS/FOTO4.jpg" alt="Image 4" class="vertical">
+            <img src="/SOMESHOOTS/FOTO5.jpg" alt="Image 5" class="vertical">
+            <img src="/SOMESHOOTS/FOTO6.jpg" alt="Image 6" class="vertical">
+            <img src="/SOMESHOOTS/FOTO7.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO8.jpg" alt="Image 1" class="vertical">
+            <img src="/SOMESHOOTS/FOTO9.jpg" alt="Image 2" class="vertical">
+            <img src="/SOMESHOOTS/FOTO10.jpg" alt="Image 3" class="vertical">
+            <img src="/SOMESHOOTS/FOTO11.jpg" alt="Image 4" class="vertical">
+            <img src="/SOMESHOOTS/FOTO12.jpg" alt="Image 5" class="vertical">
+            <img src="/SOMESHOOTS/FOTO13.jpg" alt="Image 6" class="vertical">
+            <img src="/SOMESHOOTS/FOTO14.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO15.jpg" alt="Image 1" class="vertical">
+            <img src="/SOMESHOOTS/FOTO16.jpg" alt="Image 2" class="vertical">
+            <img src="/SOMESHOOTS/FOTO17.jpg" alt="Image 3" class="vertical">
+            <img src="/SOMESHOOTS/FOTO18.jpg" alt="Image 4" class="vertical">
+            <img src="/SOMESHOOTS/FOTO19.jpg" alt="Image 5" class="vertical">
+            <img src="/SOMESHOOTS/FOTO20.jpg" alt="Image 6" class="vertical">
+            <img src="/SOMESHOOTS/FOTO21.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO22.jpg" alt="Image 1" class="vertical">
+            <img src="/SOMESHOOTS/FOTO23.jpg" alt="Image 2" class="horizontal">
+            <img src="/SOMESHOOTS/FOTO24.jpg" alt="Image 3" class="horizontal">
+            <img src="/SOMESHOOTS/FOTO25.jpg" alt="Image 4" class="horizontal">
+            <img src="/SOMESHOOTS/FOTO26.jpg" alt="Image 5" class="vertical">
+            <img src="/SOMESHOOTS/FOTO27.jpg" alt="Image 6" class="vertical">
+            <img src="/SOMESHOOTS/FOTO28.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO29.jpg" alt="Image 1" class="vertical">
+            <img src="/SOMESHOOTS/FOTO30.jpg" alt="Image 2" class="vertical">
+            <img src="/SOMESHOOTS/FOTO31.jpg" alt="Image 3" class="vertical">
+            <img src="/SOMESHOOTS/FOTO32.jpg" alt="Image 4" class="vertical">
+            <img src="/SOMESHOOTS/FOTO33.jpg" alt="Image 5" class="vertical">
+            <img src="/SOMESHOOTS/FOTO34.jpg" alt="Image 6" class="vertical">
+            <img src="/SOMESHOOTS/FOTO35.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO36.jpg" alt="Image 1" class="vertical">
+            <img src="/SOMESHOOTS/FOTO37.jpg" alt="Image 2" class="vertical">
+            <img src="/SOMESHOOTS/FOTO38.jpg" alt="Image 3" class="vertical">
+            <img src="/SOMESHOOTS/FOTO39.jpg" alt="Image 4" class="vertical">
+            <img src="/SOMESHOOTS/FOTO40.jpg" alt="Image 5" class="vertical">
+            <img src="/SOMESHOOTS/FOTO41.jpg" alt="Image 6" class="vertical">
+            <img src="/SOMESHOOTS/FOTO42.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO43.jpg" alt="Image 1" class="vertical">
+            <img src="/SOMESHOOTS/FOTO44.jpg" alt="Image 2" class="vertical">
+            <img src="/SOMESHOOTS/FOTO45.jpg" alt="Image 3" class="vertical">
+            <img src="/SOMESHOOTS/FOTO46.jpg" alt="Image 4" class="vertical">
+            <img src="/SOMESHOOTS/FOTO47.jpg" alt="Image 5" class="vertical">
+            <img src="/SOMESHOOTS/FOTO48.jpg" alt="Image 6" class="vertical">
+            <img src="/SOMESHOOTS/FOTO49.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO50.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO51.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO52.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO53.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO54.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO55.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO56.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO57.jpg" alt="Image 7" class="vertical">
+            <img src="/SOMESHOOTS/FOTO58.jpg" alt="Image 7" class="vertical">
+        </div>
+      </div>
+
+      
+
+    </div>
+<!-- New Column with Moving Text -->
+<div class="moving-text-column">
+    <div class="moving-text">ABOUT</div>
+  </div>
+
+  </div>
+
+  <div class="only-desktop">Hi there,<br> this site is optimized<br>for desktop use only.<br>Enjoy :)</div>
+
+<!-- Overlay nascosto all'inizio -->
+<div id="about-overlay" class="overlay" style="display: none;">
+    <div class="overlay-content">
+      <p>Hi,
+        I'm Emiliano Garibaldi, a designer based in Milan ///
+        <a href="https://www.instagram.com/emingwaay/" target="_blank" >@emingwaay</a>
+        / <a href="tel:+393455932751">
+            +39 3455932751
+          </a>
+       / <a href="mailto:garibaldiemiliano1@gmail.com">garibaldiemiliano1@gmail.com</a>
+      </p>
+      <span class="close-button" onclick="closeOverlay()">BACK</span>
+    </div>
+  </div>
+
+  <!-- Sezione di caricamento iniziale -->
+<div class="loading-text-column">
+    <div class="loading-text">CARICAMENTO IN CORSO...</div>
+</div>
+
+
+
+  <script>
+
+// Funzione per far muovere il testo in modo casuale e rimbalzante
+document.addEventListener("DOMContentLoaded", function() {
+  const text = document.querySelector(".moving-text");
+  const column = document.querySelector(".moving-text-column");
+
+   // Funzione per aggiornare dinamicamente l'altezza della colonna
+   function updateColumnHeight() {
+        const windowHeight = window.innerHeight;
+        column.style.height = `${windowHeight - column.getBoundingClientRect().top}px`;
+      }
+
+      // Aggiornare la colonna all'inizio e quando la finestra cambia dimensione
+      updateColumnHeight();
+      window.addEventListener("resize", updateColumnHeight);
+  
+  const speed = 2
+; // Velocità costante di movimento
+  
+  let directionX = (Math.random() < 0.5 ? 1 : -1); // Direzione iniziale casuale
+  let directionY = (Math.random() < 0.5 ? 1 : -1); // Direzione iniziale casuale
+  let positionX = column.offsetWidth / 2 - text.offsetWidth / 2; // Inizio al centro della colonna
+  let positionY = column.offsetHeight / 2 - text.offsetHeight / 2; // Inizio al centro della colonna
+  
+  function moveText() {
+    // Muove il testo nella direzione
+    positionX += directionX * speed;
+    positionY += directionY * speed;
+
+    // Rimbalza sui bordi
+    if (positionX <= 0 || positionX >= column.offsetWidth - text.offsetWidth) {
+      directionX *= -1; // Inverte la direzione X
+    }
+    if (positionY <= 0 || positionY >= column.offsetHeight - text.offsetHeight) {
+      directionY *= -1; // Inverte la direzione Y
+    }
+
+    // Applica la nuova posizione
+    text.style.left = `${positionX}px`;
+    text.style.top = `${positionY}px`;
+
+    requestAnimationFrame(moveText); // Continua a muovere il testo
+  }
+
+  moveText(); // Avvia il movimento
+});
+
+    function toggleDescription(id) {
+      var descRow = document.getElementById(id);
+      if (descRow.style.display === "none" || descRow.style.display === "") {
+        descRow.style.display = "block";
+      } else {
+        descRow.style.display = "none";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    // Seleziona il pulsante "ABOUT" e l'overlay
+    document.querySelector(".moving-text-column").addEventListener("click", function() {
+      document.getElementById("about-overlay").style.display = "flex";
+    });
+
+   
+  });
+
+  function closeOverlay() {
+      document.getElementById("about-overlay").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+  const loadingText = document.querySelector(".loading-text");
+  const loadingColumn = document.querySelector(".loading-text-column");
+
+  const speed = 2; // Velocità costante di movimento
+
+  let directionX = (Math.random() < 0.5 ? 1 : -1); // Direzione iniziale casuale
+  let directionY = (Math.random() < 0.5 ? 1 : -1); // Direzione iniziale casuale
+  let positionX = loadingColumn.offsetWidth / 2 - loadingText.offsetWidth / 2; // Inizio al centro
+  let positionY = loadingColumn.offsetHeight / 2 - loadingText.offsetHeight / 2; // Inizio al centro
+
+  function moveLoadingText() {
+    // Muove il testo nella direzione
+    positionX += directionX * speed;
+    positionY += directionY * speed;
+
+    // Rimbalza sui bordi
+    if (positionX <= 0 || positionX >= loadingColumn.offsetWidth - loadingText.offsetWidth) {
+      directionX *= -1; // Inverte la direzione X
+    }
+    if (positionY <= 0 || positionY >= loadingColumn.offsetHeight - loadingText.offsetHeight) {
+      directionY *= -1; // Inverte la direzione Y
+    }
+
+    // Applica la nuova posizione
+    loadingText.style.left = `${positionX}px`;
+    loadingText.style.top = `${positionY}px`;
+
+    requestAnimationFrame(moveLoadingText); // Continua il movimento
+  }
+
+  moveLoadingText(); // Inizia il movimento del testo di caricamento
+
+  // Simulazione di caricamento (puoi sostituire questa parte con un vero caricamento)
+  setTimeout(() => {
+    loadingColumn.style.display = "none"; // Nascondi la sezione di caricamento dopo un ritardo
+  }, 5000); // Nasconde dopo 5 secondi
+});
+
+
+
+  </script>
+
+</body>
+</html>

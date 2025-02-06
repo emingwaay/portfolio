@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+    }
+
+    .portfolio-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid #333; /* Linee orizzontali */
+      cursor: pointer;
+    }
+
+    .row:last-child {
+      border-bottom: none; /* Rimuove la linea orizzontale dall'ultima riga */
+    }
+
+    .header {
+      font-weight: bold;
+    }
+
+    .cell {
+      flex: 1;
+      padding: 8px;  /* Ridotto da 15px a 8px */
+      text-align: left;
+      box-sizing: border-box;
+    }
+
+    .row:not(.header) .cell {
+      border: none; /* Elimina tutte le linee verticali */
+    }
+
+    .description-row {
+      display: none;
+      background-color: #222;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .description {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .image-gallery {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 10px;
+    }
+
+    .image-gallery img {
+      width: 300px; /* Modifica la larghezza delle immagini */
+      height: auto;
+      border-radius: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="portfolio-table">
+    <div class="row header">
+      <div class="cell">Project</div>
+      <div class="cell">Category</div>
+      <div class="cell">Client</div>
+      <div class="cell">Year</div>
+    </div>
+    
+    <!-- First Project -->
+    <div class="row" onclick="toggleDescription('desc1')">
+      <div class="cell">Specta</div>
+      <div class="cell">Category 1</div>
+      <div class="cell">Client 1</div>
+      <div class="cell">2023</div>
+    </div>
+    <div id="desc1" class="description-row">
+      <div class="description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Quisque ut erat urna. Sed lacinia bibendum felis.
+      </div>
+      <!-- Image Gallery for First Project -->
+      <div class="image-gallery">
+        <img src="https://via.placeholder.com/300" alt="Image 1">
+        <img src="https://via.placeholder.com/300" alt="Image 2">
+        <img src="https://via.placeholder.com/300" alt="Image 3">
+        <img src="https://via.placeholder.com/300" alt="Image 4">
+        <img src="https://via.placeholder.com/300" alt="Image 5">
+        <img src="https://via.placeholder.com/300" alt="Image 6">
+        <img src="https://via.placeholder.com/300" alt="Image 7">
+        <img src="https://via.placeholder.com/300" alt="Image 8">
+        <img src="https://via.placeholder.com/300" alt="Image 9">
+        <img src="https://via.placeholder.com/300" alt="Image 10">
+      </div>
+    </div>
+
+    <!-- Second Project -->
+    <div class="row" onclick="toggleDescription('desc2')">
+      <div class="cell">Gucci/Kaleos Concept</div>
+      <div class="cell">Category 2</div>
+      <div class="cell">Client 2</div>
+      <div class="cell">2022</div>
+    </div>
+    <div id="desc2" class="description-row">
+      <div class="description">
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vivamus at augue eget arcu dictum. Elementum tempus egestas sed sed risus pretium quam. Enim sit amet venenatis urna. Auctor augue mauris augue neque gravida. Eu augue ut lectus arcu bibendum. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Orci eu lobortis elementum nibh tellus. Aliquam sem et tortor consequat id porta. At elementum eu facilisis sed. Consequat id porta nibh venenatis cras sed felis eget. 
+      </div>
+      <!-- Image Gallery for Second Project -->
+      <div class="image-gallery">
+        <img src="https://via.placeholder.com/300" alt="Image 1">
+        <img src="https://via.placeholder.com/300" alt="Image 2">
+        <img src="https://via.placeholder.com/300" alt="Image 3">
+        <img src="https://via.placeholder.com/300" alt="Image 4">
+        <img src="https://via.placeholder.com/300" alt="Image 5">
+        <img src="https://via.placeholder.com/300" alt="Image 6">
+        <img src="https://via.placeholder.com/300" alt="Image 7">
+        <img src="https://via.placeholder.com/300" alt="Image 8">
+        <img src="https://via.placeholder.com/300" alt="Image 9">
+        <img src="https://via.placeholder.com/300" alt="Image 10">
+      </div>
+    </div>
+    
+  </div>
+
+  <script>
+    function toggleDescription(id) {
+      var descRow = document.getElementById(id);
+      if (descRow.style.display === "none" || descRow.style.display === "") {
+        descRow.style.display = "block";
+      } else {
+        descRow.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
